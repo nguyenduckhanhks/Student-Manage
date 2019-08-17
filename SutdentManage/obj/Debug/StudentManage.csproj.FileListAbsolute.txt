@@ -1,0 +1,11 @@
+C:\Users\NGUYEN DUC KHANH\Desktop\Quản lí học sinh\SutdentManage\bin\Debug\SutdentManage.exe.config
+C:\Users\NGUYEN DUC KHANH\Desktop\Quản lí học sinh\SutdentManage\bin\Debug\SutdentManage.exe
+C:\Users\NGUYEN DUC KHANH\Desktop\Quản lí học sinh\SutdentManage\bin\Debug\SutdentManage.pdb
+C:\Users\NGUYEN DUC KHANH\Desktop\Quản lí học sinh\SutdentManage\obj\Debug\StudentManage.csprojAssemblyReference.cache
+C:\Users\NGUYEN DUC KHANH\Desktop\Quản lí học sinh\SutdentManage\obj\Debug\SutdentManage.student.resources
+C:\Users\NGUYEN DUC KHANH\Desktop\Quản lí học sinh\SutdentManage\obj\Debug\SutdentManage.Properties.Resources.resources
+C:\Users\NGUYEN DUC KHANH\Desktop\Quản lí học sinh\SutdentManage\obj\Debug\StudentManage.csproj.GenerateResource.cache
+C:\Users\NGUYEN DUC KHANH\Desktop\Quản lí học sinh\SutdentManage\obj\Debug\StudentManage.csproj.CoreCompileInputs.cache
+C:\Users\NGUYEN DUC KHANH\Desktop\Quản lí học sinh\SutdentManage\obj\Debug\SutdentManage.exe
+C:\Users\NGUYEN DUC KHANH\Desktop\Quản lí học sinh\SutdentManage\obj\Debug\SutdentManage.pdb
+C:\Users\NGUYEN DUC KHANH\Desktop\Quản lí học sinh\SutdentManage\obj\Debug\SutdentManage.ClassForm.resources

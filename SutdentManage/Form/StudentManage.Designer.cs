@@ -47,8 +47,6 @@
             this.Search = new System.Windows.Forms.Button();
             this.pnDetails = new System.Windows.Forms.Panel();
             this.cbMale = new System.Windows.Forms.ComboBox();
-            this.lbId = new System.Windows.Forms.Label();
-            this.lb = new System.Windows.Forms.Label();
             this.cbClass = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
             this.btOk = new System.Windows.Forms.Button();
@@ -101,14 +99,14 @@
             // studentToolStripMenuItem
             // 
             this.studentToolStripMenuItem.Name = "studentToolStripMenuItem";
-            this.studentToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.studentToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
             this.studentToolStripMenuItem.Text = "Student";
             this.studentToolStripMenuItem.Click += new System.EventHandler(this.StudentToolStripMenuItem_Click);
             // 
             // classToolStripMenuItem
             // 
             this.classToolStripMenuItem.Name = "classToolStripMenuItem";
-            this.classToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.classToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
             this.classToolStripMenuItem.Text = "Class";
             this.classToolStripMenuItem.Click += new System.EventHandler(this.ClassToolStripMenuItem_Click);
             // 
@@ -241,8 +239,6 @@
             // pnDetails
             // 
             this.pnDetails.Controls.Add(this.cbMale);
-            this.pnDetails.Controls.Add(this.lbId);
-            this.pnDetails.Controls.Add(this.lb);
             this.pnDetails.Controls.Add(this.cbClass);
             this.pnDetails.Controls.Add(this.button2);
             this.pnDetails.Controls.Add(this.btOk);
@@ -277,26 +273,6 @@
             this.cbMale.Name = "cbMale";
             this.cbMale.Size = new System.Drawing.Size(76, 28);
             this.cbMale.TabIndex = 27;
-            // 
-            // lbId
-            // 
-            this.lbId.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lbId.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lbId.Enabled = false;
-            this.lbId.Location = new System.Drawing.Point(97, 17);
-            this.lbId.Name = "lbId";
-            this.lbId.Size = new System.Drawing.Size(342, 20);
-            this.lbId.TabIndex = 26;
-            // 
-            // lb
-            // 
-            this.lb.AutoSize = true;
-            this.lb.Enabled = false;
-            this.lb.Location = new System.Drawing.Point(6, 17);
-            this.lb.Name = "lb";
-            this.lb.Size = new System.Drawing.Size(27, 20);
-            this.lb.TabIndex = 25;
-            this.lb.Text = "Id:";
             // 
             // cbClass
             // 
@@ -517,8 +493,6 @@
         private System.Windows.Forms.TextBox tbChemistry;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox cbClass;
-        private System.Windows.Forms.Label lbId;
-        private System.Windows.Forms.Label lb;
         private System.Windows.Forms.ComboBox cbMale;
     }
 }

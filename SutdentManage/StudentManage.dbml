@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="STUDENTMANAGE" Class="StudentManageDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\SQLExpress;Initial Catalog=STUDENTMANAGE;Integrated Security=True" SettingsObjectName="SutdentManage.Properties.Settings" SettingsPropertyName="STUDENTMANAGEConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Aclass" Member="Aclasses">
+    <Type Name="Aclass">
+      <Column Name="id" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="numberOfStudents" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Aclass_Astudent" Member="Astudents" ThisKey="id" OtherKey="idClass" Type="Astudent" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Astudent" Member="Astudents">
+    <Type Name="Astudent">
+      <Column Name="id" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idClass" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="dateOfbirth" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="telephone" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="male" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="mathPoint" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="physicalPoint" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="chemicalPoint" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Aclass_Astudent" Member="Aclass" ThisKey="idClass" OtherKey="id" Type="Aclass" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

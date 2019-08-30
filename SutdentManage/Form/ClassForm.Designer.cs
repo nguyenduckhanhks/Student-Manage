@@ -34,8 +34,6 @@
             this.btAdd = new System.Windows.Forms.Button();
             this.btSearch = new System.Windows.Forms.Button();
             this.pnDetails = new System.Windows.Forms.Panel();
-            this.lbId = new System.Windows.Forms.Label();
-            this.lb = new System.Windows.Forms.Label();
             this.nudNumberOfStudent = new System.Windows.Forms.NumericUpDown();
             this.btCancle = new System.Windows.Forms.Button();
             this.btOk = new System.Windows.Forms.Button();
@@ -115,8 +113,6 @@
             // 
             // pnDetails
             // 
-            this.pnDetails.Controls.Add(this.lbId);
-            this.pnDetails.Controls.Add(this.lb);
             this.pnDetails.Controls.Add(this.nudNumberOfStudent);
             this.pnDetails.Controls.Add(this.btCancle);
             this.pnDetails.Controls.Add(this.btOk);
@@ -128,26 +124,6 @@
             this.pnDetails.Name = "pnDetails";
             this.pnDetails.Size = new System.Drawing.Size(347, 597);
             this.pnDetails.TabIndex = 9;
-            // 
-            // lbId
-            // 
-            this.lbId.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lbId.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lbId.Enabled = false;
-            this.lbId.Location = new System.Drawing.Point(150, 25);
-            this.lbId.Name = "lbId";
-            this.lbId.Size = new System.Drawing.Size(185, 20);
-            this.lbId.TabIndex = 28;
-            // 
-            // lb
-            // 
-            this.lb.AutoSize = true;
-            this.lb.Enabled = false;
-            this.lb.Location = new System.Drawing.Point(10, 28);
-            this.lb.Name = "lb";
-            this.lb.Size = new System.Drawing.Size(23, 17);
-            this.lb.TabIndex = 27;
-            this.lb.Text = "Id:";
             // 
             // nudNumberOfStudent
             // 
@@ -226,7 +202,7 @@
             // studentToolStripMenuItem
             // 
             this.studentToolStripMenuItem.Name = "studentToolStripMenuItem";
-            this.studentToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.studentToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
             this.studentToolStripMenuItem.Text = "Student";
             this.studentToolStripMenuItem.Click += new System.EventHandler(this.StudentToolStripMenuItem_Click);
             // 
@@ -235,6 +211,7 @@
             this.classToolStripMenuItem.Name = "classToolStripMenuItem";
             this.classToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.classToolStripMenuItem.Text = "Class";
+            this.classToolStripMenuItem.Click += new System.EventHandler(this.ClassToolStripMenuItem_Click);
             // 
             // thoátToolStripMenuItem
             // 
@@ -353,7 +330,5 @@
         private System.Windows.Forms.Label lbName;
         private System.Windows.Forms.Label lbSearch;
         private System.Windows.Forms.Label lbTitle;
-        private System.Windows.Forms.Label lbId;
-        private System.Windows.Forms.Label lb;
     }
 }

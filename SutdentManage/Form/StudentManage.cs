@@ -1,6 +1,4 @@
 ﻿using SutdentManage.DAO;
-using SutdentManage.DataProvide;
-using SutdentManage.DTO;
 using SutdentManage.Provider;
 using System;
 using System.Collections.Generic;
@@ -24,7 +22,23 @@ namespace SutdentManage
 
         void loadDataStudent()
         {
-            dgvData.DataSource = StudentDAO.Instance.getStudents();
+            dgvData.DataSource = from st in Data.DataStudent.Astudents
+                                 select new
+                                 {
+                                     Id = st.id,
+                                     Idclass = st.idClass,
+                                     Tên = st.name,
+                                     Ngày_sinh = st.dateOfbirth,
+                                     Số_điện_thoại = st.telephone,
+                                     Email = st.email,
+                                     Giới_tính = st.male,
+                                     Toán = st.mathPoint,
+                                     Lý = st.physicalPoint,
+                                     Hóa = st.chemicalPoint,
+                                 }; 
+            dgvData.Columns["Id"].Visible = false;
+            dgvData.Columns["Idclass"].Visible = false;
+            dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             btDelete.Enabled = false;
             btRepair.Enabled = false;
             pnDetails.Enabled = false;
@@ -32,9 +46,10 @@ namespace SutdentManage
             Search.Enabled = true;
 
             cbClass.Items.Clear();
-            foreach(DataRow item in ClassDAO.Instance.getClass().Rows)
+            var lst = Data.DataStudent.Aclasses.Select(p => p).ToList();
+            foreach(var item in lst)
             {
-                cbClass.Items.Add(item["name"]);
+                cbClass.Items.Add(item.name);
             }
         }
 
@@ -42,7 +57,24 @@ namespace SutdentManage
         {
             loadDataStudent();
             lbTitle.Text = "Search";
-            dgvData.DataSource = StudentDAO.Instance.findStudent(tbName.Text);
+            dgvData.DataSource = from st in Data.DataStudent.Astudents
+                                 where st.name == tbName.Text
+                                 select new
+                                 {
+                                     Id = st.id,
+                                     Idclass = st.idClass,
+                                     Tên = st.name,
+                                     Ngày_sinh = st.dateOfbirth,
+                                     Số_điện_thoại = st.telephone,
+                                     Email = st.email,
+                                     Giới_tính = st.male,
+                                     Toán = st.mathPoint,
+                                     Lý = st.physicalPoint,
+                                     Hóa = st.chemicalPoint,
+                                 };
+            dgvData.Columns["Id"].Visible = false;
+            dgvData.Columns["Idclass"].Visible = false;
+            dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void BtAdd_Click(object sender, EventArgs e)
@@ -54,17 +86,26 @@ namespace SutdentManage
 
         private void DgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            btAdd.Enabled = false;
-            btDelete.Enabled = true;
-            btRepair.Enabled = true;
-            pnDetails.Enabled = true;
-            loadDataDetails(e);
+            try
+            {
+                btAdd.Enabled = false;
+                btDelete.Enabled = true;
+                btRepair.Enabled = true;
+                pnDetails.Enabled = true;
+                loadDataDetails(e);
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Error");
+            }
+           
         }
 
         private void loadDataDetails(DataGridViewCellEventArgs e)
         {
-            lbId.Text = dgvData[0, e.RowIndex].Value.ToString();
-            cbClass.Text = ClassDAO.Instance.findClass(dgvData[1, e.RowIndex].Value.ToString()).Rows[0]["name"].ToString();
+            string id = dgvData.SelectedCells[0].OwningRow.Cells["Idclass"].Value.ToString();
+            Aclass st = Data.DataStudent.Aclasses.Where(p => p.id.Equals(id)).SingleOrDefault();
+            cbClass.Text = st.name;
             tbNameDetail.Text = dgvData[2, e.RowIndex].Value.ToString();
             dtpDateOfBirth.Value = DateTimeProvider.Instance.convertStringToDate(dgvData[3, e.RowIndex].Value.ToString());
             tbTelephone.Text = dgvData[4, e.RowIndex].Value.ToString();
@@ -80,14 +121,12 @@ namespace SutdentManage
 
         private void BtRepair_Click(object sender, EventArgs e)
         {
-            loadDataStudent();
             lbTitle.Text = "Repair Class Of Student";
             pnDetails.Enabled = true;
         }
 
         private void BtDelete_Click(object sender, EventArgs e)
         {
-            loadDataStudent();
             lbTitle.Text = "Delete A Student";
             pnDetails.Enabled = true;
         }
@@ -96,25 +135,62 @@ namespace SutdentManage
         {
             try
             {
+                Aclass cl = Data.DataStudent.Aclasses.Where(p => p.name.Equals(cbClass.Text)).SingleOrDefault();
+                string idclass = cl.id;
+                string name = tbNameDetail.Text;
+                DateTime dateOfBirth = dtpDateOfBirth.Value;
+                string telephone = tbTelephone.Text;
+                string email = tbEmail.Text;
+                int male = 0;
+                if (cbMale.Text == "Male") male = 1;
+                float math = float.Parse(tbMath.Text);
+                float physic = float.Parse(tbPhysical.Text);
+                float chemical = float.Parse(tbChemistry.Text);
                 if (lbTitle.Text == "Add Student")
                 {
-                    Student student = new Student(ClassDAO.Instance.findClass("", cbClass.Text).Rows[0]["id"].ToString(), tbNameDetail.Text,
-                        dtpDateOfBirth.Value.ToString("yyyMMdd"), tbTelephone.Text, tbEmail.Text, cbMale.Text, float.Parse(tbMath.Text),
-                        float.Parse(tbPhysical.Text), float.Parse(tbChemistry.Text));
+                    string id = RandomIdProvide.Instance.CreateId();
+                    Astudent st = new Astudent();
+                    st.id = id;
+                    st.idClass = idclass;
+                    st.dateOfbirth = dateOfBirth;
+                    st.name = name;
+                    st.telephone = telephone;
+                    st.email = email;
+                    st.male = male;
+                    st.mathPoint = math;
+                    st.physicalPoint = physic;
+                    st.chemicalPoint = chemical;
 
-                    StudentDAO.Instance.insertStudent(student);
-                }
-                else if (lbTitle.Text == "Search")
-                {
-                    dgvData.DataSource = StudentDAO.Instance.findStudent(tbName.Text);
+                    Data.DataStudent.Astudents.InsertOnSubmit(st);
+                    Data.DataStudent.SubmitChanges();
+                    
                 }
                 else if (lbTitle.Text == "Repair Class Of Student")
                 {
-                    StudentDAO.Instance.repairStudent(lbId.Text, cbClass.Text);
+                    string id = dgvData.SelectedCells[0].OwningRow.Cells["Id"].Value.ToString();
+
+                    Astudent st = Data.DataStudent.Astudents.Where(p => p.id.Equals(id)).SingleOrDefault();
+
+                    st.idClass = idclass;
+                    st.dateOfbirth = dateOfBirth;
+                    st.name = name;
+                    st.telephone = telephone;
+                    st.email = email;
+                    st.male = male;
+                    st.mathPoint = math;
+                    st.physicalPoint = physic;
+                    st.chemicalPoint = chemical;
+
+                    Data.DataStudent.SubmitChanges();
                 }
                 else if (lbTitle.Text == "Delete A Student")
                 {
-                    StudentDAO.Instance.deleteStudent(lbId.Text, cbClass.Text);
+                    string id = dgvData.SelectedCells[0].OwningRow.Cells["Id"].Value.ToString();
+
+                    Astudent st = Data.DataStudent.Astudents.Where(p => p.id.Equals(id)).SingleOrDefault();
+
+                    Data.DataStudent.Astudents.DeleteOnSubmit(st);
+                    Data.DataStudent.SubmitChanges();
                 }
             }
             catch(System.Exception)

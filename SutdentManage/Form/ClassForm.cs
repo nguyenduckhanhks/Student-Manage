@@ -94,42 +94,21 @@ namespace SutdentManage
         {
             try
             {
+                string id = dgvData.SelectedCells[0].OwningRow.Cells["Id"].Value.ToString();
                 if (lbTitle.Text == "Add A Class")
                 {
-                    string name = tbNameClass.Text;
-                    string id = RandomIdProvide.Instance.CreateId();
-                    int numberOfStudent = int.Parse(nudNumberOfStudent.Value.ToString());
-                    Aclass insert = new Aclass();
-
-                    insert.id = id;
-                    insert.name = name;
-                    insert.numberOfStudents = numberOfStudent;
-
-                    Data.DataStudent.Aclasses.InsertOnSubmit(insert);
-                    Data.DataStudent.SubmitChanges();
-                    
+                    ClassDAO.Instance.addClass(tbNameClass.Text, int.Parse(nudNumberOfStudent.Value.ToString()));
                     loadClass();
                 }
                 else if (lbTitle.Text == "Repair A Class")
                 {
-                    string id = dgvData.SelectedCells[0].OwningRow.Cells["Id"].Value.ToString();
-                    string name = tbNameClass.Text;
-                    int number = int.Parse(nudNumberOfStudent.Value.ToString());
+                    
+                    ClassDAO.Instance.repairClass(id, tbNameClass.Text, int.Parse(nudNumberOfStudent.Value.ToString()));
 
-                    Aclass repair = Data.DataStudent.Aclasses.Where(p=>p.id.Equals(id)).SingleOrDefault();
-
-                    repair.id = id;
-                    repair.name = name;
-                    repair.numberOfStudents = number;
-
-                    Data.DataStudent.SubmitChanges();
                 }
                 else if (lbTitle.Text == "Delete A Class")
                 {
-                    string id = dgvData.SelectedCells[0].OwningRow.Cells["Id"].Value.ToString();
-                    Aclass delete = Data.DataStudent.Aclasses.Where(p => p.id.Equals(id)).SingleOrDefault();
-                    Data.DataStudent.Aclasses.DeleteOnSubmit(delete);
-                    Data.DataStudent.SubmitChanges();
+                    ClassDAO.Instance.deleteClass(id);
                 }
             }
             catch(System.Exception)

@@ -29,6 +29,7 @@ namespace SutdentManage
                                      Idclass = st.idClass,
                                      Tên = st.name,
                                      Ngày_sinh = st.dateOfbirth,
+                                     Lớp = st.Aclass.name,
                                      Số_điện_thoại = st.telephone,
                                      Email = st.email,
                                      Giới_tính = st.male,
@@ -103,20 +104,24 @@ namespace SutdentManage
 
         private void loadDataDetails(DataGridViewCellEventArgs e)
         {
-            string id = dgvData.SelectedCells[0].OwningRow.Cells["Idclass"].Value.ToString();
-            Aclass st = Data.DataStudent.Aclasses.Where(p => p.id.Equals(id)).SingleOrDefault();
-            cbClass.Text = st.name;
-            tbNameDetail.Text = dgvData[2, e.RowIndex].Value.ToString();
-            dtpDateOfBirth.Value = DateTimeProvider.Instance.convertStringToDate(dgvData[3, e.RowIndex].Value.ToString());
-            tbTelephone.Text = dgvData[4, e.RowIndex].Value.ToString();
-            tbEmail.Text = dgvData[5, e.RowIndex].Value.ToString();
+            string idClass = dgvData.SelectedCells[0].OwningRow.Cells["Idclass"].Value.ToString();
+            Aclass cl = Data.DataStudent.Aclasses.Where(p => p.id.Equals(idClass)).SingleOrDefault();
 
-            cbMale.Text = dgvData[6, e.RowIndex].Value.ToString();
-            if (cbMale.Text == "1") cbMale.Text = "Male"; else cbMale.Text = "Female";
+            string id = dgvData.SelectedCells[0].OwningRow.Cells["Id"].Value.ToString();
+            Astudent st = Data.DataStudent.Astudents.Where(p => p.id.Equals(id)).SingleOrDefault();
 
-            tbMath.Text = dgvData[7, e.RowIndex].Value.ToString();
-            tbPhysical.Text=dgvData[8, e.RowIndex].Value.ToString();
-            tbChemistry.Text = dgvData[9, e.RowIndex].Value.ToString();
+            cbClass.Text = cl.name;
+            tbNameDetail.Text = st.name;
+            dtpDateOfBirth.Value = st.dateOfbirth;
+            tbTelephone.Text = st.telephone;
+            tbEmail.Text = st.email;
+
+            cbMale.Text = "Male";
+            if (st.male == 0) cbMale.Text = "Female";
+
+            tbMath.Text = st.mathPoint.ToString();
+            tbPhysical.Text = st.physicalPoint.ToString();
+            tbChemistry.Text = st.chemicalPoint.ToString();
         }
 
         private void BtRepair_Click(object sender, EventArgs e)
@@ -137,60 +142,22 @@ namespace SutdentManage
             {
                 Aclass cl = Data.DataStudent.Aclasses.Where(p => p.name.Equals(cbClass.Text)).SingleOrDefault();
                 string idclass = cl.id;
-                string name = tbNameDetail.Text;
-                DateTime dateOfBirth = dtpDateOfBirth.Value;
-                string telephone = tbTelephone.Text;
-                string email = tbEmail.Text;
-                int male = 0;
-                if (cbMale.Text == "Male") male = 1;
-                float math = float.Parse(tbMath.Text);
-                float physic = float.Parse(tbPhysical.Text);
-                float chemical = float.Parse(tbChemistry.Text);
+
                 if (lbTitle.Text == "Add Student")
                 {
-                    string id = RandomIdProvide.Instance.CreateId();
-                    Astudent st = new Astudent();
-                    st.id = id;
-                    st.idClass = idclass;
-                    st.dateOfbirth = dateOfBirth;
-                    st.name = name;
-                    st.telephone = telephone;
-                    st.email = email;
-                    st.male = male;
-                    st.mathPoint = math;
-                    st.physicalPoint = physic;
-                    st.chemicalPoint = chemical;
-
-                    Data.DataStudent.Astudents.InsertOnSubmit(st);
-                    Data.DataStudent.SubmitChanges();
-                    
+                    StudentDAO.Instance.addStudent(idclass, tbNameDetail.Text, dtpDateOfBirth.Value, tbTelephone.Text, tbEmail.Text, 
+                        cbMale.Text, float.Parse(tbMath.Text), float.Parse(tbPhysical.Text), float.Parse(tbChemistry.Text));  
                 }
                 else if (lbTitle.Text == "Repair Class Of Student")
                 {
                     string id = dgvData.SelectedCells[0].OwningRow.Cells["Id"].Value.ToString();
-
-                    Astudent st = Data.DataStudent.Astudents.Where(p => p.id.Equals(id)).SingleOrDefault();
-
-                    st.idClass = idclass;
-                    st.dateOfbirth = dateOfBirth;
-                    st.name = name;
-                    st.telephone = telephone;
-                    st.email = email;
-                    st.male = male;
-                    st.mathPoint = math;
-                    st.physicalPoint = physic;
-                    st.chemicalPoint = chemical;
-
-                    Data.DataStudent.SubmitChanges();
+                    StudentDAO.Instance.repairStudent(id, idclass, tbNameDetail.Text, dtpDateOfBirth.Value, tbTelephone.Text, tbEmail.Text,
+                        cbMale.Text, float.Parse(tbMath.Text), float.Parse(tbPhysical.Text), float.Parse(tbChemistry.Text));
                 }
                 else if (lbTitle.Text == "Delete A Student")
                 {
                     string id = dgvData.SelectedCells[0].OwningRow.Cells["Id"].Value.ToString();
-
-                    Astudent st = Data.DataStudent.Astudents.Where(p => p.id.Equals(id)).SingleOrDefault();
-
-                    Data.DataStudent.Astudents.DeleteOnSubmit(st);
-                    Data.DataStudent.SubmitChanges();
+                    StudentDAO.Instance.deleteStudent(id);
                 }
             }
             catch(System.Exception)
